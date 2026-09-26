@@ -39,14 +39,16 @@ graph.add_node('chat_node', chat_node)
 graph.add_edge(START, 'chat_node')
 graph.add_edge('chat_node', END)
 
-
+thread_id="1"
 
 chatbot = graph.compile(checkpointer=checkpoint)
 
 initial_state = {
+   
 'messages': [HumanMessage(content='What is Object oriented programming?' )]
 }
 
-response = chatbot.invoke(initial_state)
+config = {'configurable' : {'thread_id' : thread_id}}
+response = chatbot.invoke(initial_state , config=config)
 
 print(response['messages'][-1].content)
