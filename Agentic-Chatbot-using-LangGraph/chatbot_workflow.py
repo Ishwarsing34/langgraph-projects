@@ -3,6 +3,7 @@ from typing import TypedDict, Annotated
 from langchain_core.messages import BaseMessage, HumanMessage
 from langchain_openai import ChatOpenAI
 from dotenv import load_dotenv
+from langgraph.checkpoint.memory import MemorySaver
 from langgraph.graph.message import add_messages
 
 llm = ChatOpenAI()
@@ -24,7 +25,7 @@ def chat_node(state:ChatState):
     return {'messages' : [response]}
 
 
-
+checkpoint = MemorySaver()
 
 graph = StateGraph(ChatState)
 
@@ -40,7 +41,7 @@ graph.add_edge('chat_node', END)
 
 
 
-chatbot = graph.compile()
+chatbot = graph.compile(checkpointer=checkpoint)
 
 initial_state = {
 'messages': [HumanMessage(content='What is Object oriented programming?' )]
