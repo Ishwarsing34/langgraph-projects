@@ -6,7 +6,8 @@ import streamlit as st
 CONFIG = {
     "configurable": {
         "thread_id": "thread-1"
-    }
+    },
+    "run_name" : "chat_trace"
 }
 
 
